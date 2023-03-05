@@ -4,9 +4,9 @@
   
   <div class="container">
 
-    <MenuApp />
+    <MenuApp @activatedGameMode="showGameBoard" />
 
-    <GameBoardApp />
+    <GameBoardApp v-if="selectedGameMode" :game-mode="selectedGameMode" />
 
   </div>
   
@@ -18,6 +18,13 @@
   import HeaderApp from './components/HeaderApp.vue';
   import MenuApp from './components/MenuApp.vue';
   import GameBoardApp from './components/GameBoardApp.vue';
+  import { ref } from 'vue';
+
+  let selectedGameMode = ref(null)
+
+  const showGameBoard = (gameMode) => {
+    selectedGameMode.value = gameMode
+  }
 
 </script>
 

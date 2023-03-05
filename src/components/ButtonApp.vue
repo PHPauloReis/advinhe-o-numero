@@ -117,6 +117,11 @@ const isActive = computed(() => {
 .success:hover {
   background-color: #14BE0D;
   border-color: #14BE0D;
+  border-bottom-color: #48A728;
+}
+
+.success:active {
+  background-color: #14BE0D !important;
 }
 
 .danger {
@@ -130,6 +135,11 @@ const isActive = computed(() => {
 .danger:hover {
   background-color: #E52D34;
   border-color: #E52D34;
+  border-bottom-color: #D6151D;
+}
+
+.danger:active {
+  background-color: #E52D34 !important;
 }
   
 </style>

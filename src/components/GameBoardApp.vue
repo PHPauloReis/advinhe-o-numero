@@ -46,16 +46,32 @@
 
 <script setup>
 
+import { onBeforeMount } from 'vue';
 import { defaultStore } from '../store/state';
 import ButtonApp from './ButtonApp.vue';
+import gameDefinitions from '../commons/gameDefinitions'
 
 let numbers = []
+let moves = 0
+let helps = 0
 
-const store = defaultStore() 
+const store = defaultStore()
 
-for (let i = 1; i <= 50; i++) {
+const props = defineProps({
+  gameMode: {
+    type: String,
+    required: false,
+    default: {}
+  }
+})
+
+onBeforeMount(() => {
+
+  for (let i = 1; i <= 50; i++) {
     numbers.push(i)
-}
+  }
+  
+})
 
 const zeroFill = (value) => value.toString().padStart(2, '0')
 
@@ -72,8 +88,18 @@ const chooseOption = (value) => {
   }
 }
 
+const canAskForHelp = () => {
+  return helps < gameDefinitions[props.gameMode].help
+}
+
 const help = () => {
-  alert('Você pediu ajuda!')
+  if (!canAskForHelp()) {
+    alert("Você não pode mais pedir ajuda!")
+    return
+  }
+
+  helps++
+  alert("Você pediu ajuda!")
 }
 
 const exit = () => {

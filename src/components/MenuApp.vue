@@ -26,6 +26,8 @@
 import ButtonApp from './ButtonApp.vue';
 import { defaultStore } from '../store/state';
 
+const emit = defineEmits(['activatedGameMode'])
+
 const buttons = [
   { text: 'Fácil', value: 'easy', active: false },
   { text: 'Normal', value: 'normal', active: false },
@@ -35,6 +37,7 @@ const store = defaultStore()
 
 const changeGameMode = (gameMode) => {
   store.setActiveGameMode(gameMode)
+  emit('activatedGameMode', gameMode)
 }
 
 </script>
