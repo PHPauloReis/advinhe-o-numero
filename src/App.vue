@@ -8,6 +8,8 @@
 
     <GameBoardApp v-if="selectedGameMode" :game-mode="selectedGameMode" />
 
+    <ModalApp />
+
   </div>
   
 
@@ -18,6 +20,7 @@
   import HeaderApp from './components/HeaderApp.vue';
   import MenuApp from './components/MenuApp.vue';
   import GameBoardApp from './components/GameBoardApp.vue';
+  import ModalApp from  './components/ModalApp.vue'
   import { ref } from 'vue';
 
   let selectedGameMode = ref(null)
