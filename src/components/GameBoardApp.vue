@@ -4,7 +4,7 @@
 
     <h2>Em qual número eu estou pensando?</h2>
 
-    <div class="move-counter">Você ainda tem 8 jogadas!</div>
+    <div class="move-counter">Você ainda tem {{ movesAvailable }} jogadas!</div>
 
     <div class="number-container">
 
@@ -46,14 +46,14 @@
 
 <script setup>
 
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, computed, ref } from 'vue';
 import { defaultStore } from '../store/state';
 import ButtonApp from './ButtonApp.vue';
 import gameDefinitions from '../commons/gameDefinitions'
 
 let numbers = []
-let moves = 0
-let helps = 0
+let moves = ref(0)
+let helps = ref(0)
 
 const store = defaultStore()
 
@@ -73,18 +73,23 @@ onBeforeMount(() => {
   
 })
 
+const movesAvailable = computed(() => {
+  return gameDefinitions[props.gameMode].moves - moves.value
+})
+
 const zeroFill = (value) => value.toString().padStart(2, '0')
 
 const chooseOption = (value) => {
   const selectedOptions = store.getSelectedValues
 
-  if (selectedOptions.length >= 6) {
-    alert('asdfasdf')
+  if (selectedOptions.length >= gameDefinitions[props.gameMode].moves) {
+    alert('Você não pode mais selecionar nenhum número!')
     return
   }
 
   if (!selectedOptions.includes(value)) {
     store.addSelectedValue(value)
+    moves.value++
   }
 }
 
