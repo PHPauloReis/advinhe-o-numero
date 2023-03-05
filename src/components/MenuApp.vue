@@ -36,6 +36,7 @@ const buttons = [
 const store = defaultStore()
 
 const changeGameMode = (gameMode) => {
+  store.clear()
   store.setActiveGameMode(gameMode)
   emit('activatedGameMode', gameMode)
 }

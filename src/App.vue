@@ -6,7 +6,7 @@
 
     <MenuApp @activatedGameMode="showGameBoard" />
 
-    <GameBoardApp @askedForHelp="showHelpModal = true" v-if="selectedGameMode" :game-mode="selectedGameMode" />
+    <GameBoardApp @askedForHelp="showHelpModal = true" v-if="hasGameModeSelected" :game-mode="selectedGameMode" />
 
     <ModalApp @closeModal="showHelpModal = false" :showing="showHelpModal" />
 
@@ -21,7 +21,10 @@
   import MenuApp from './components/MenuApp.vue';
   import GameBoardApp from './components/GameBoardApp.vue';
   import ModalApp from  './components/ModalApp.vue'
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
+  import { defaultStore } from './store/state';
+
+  const store = defaultStore()
 
   let selectedGameMode = ref(null)
   let showHelpModal = ref(false)
@@ -29,6 +32,10 @@
   const showGameBoard = (gameMode) => {
     selectedGameMode.value = gameMode
   }
+
+  const hasGameModeSelected = computed(() => {
+    return !!selectedGameMode.value && !!store.getActiveGameMode
+  })
 
 </script>
 

@@ -46,7 +46,7 @@
 
 <script setup>
 
-import { onBeforeMount, computed, ref } from 'vue';
+import { onBeforeMount, computed, ref, vModelSelect } from 'vue';
 import { defaultStore } from '../store/state';
 import ButtonApp from './ButtonApp.vue';
 import gameDefinitions from '../commons/gameDefinitions'
@@ -112,6 +112,8 @@ const help = () => {
 const exit = () => {
   if (confirm('Você tem certeza que deseja desistir dessa partida?')) {
     store.clear()
+    moves.value = 0
+    helps.value = 0
   }
 }
 
