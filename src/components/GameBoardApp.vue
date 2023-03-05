@@ -23,15 +23,19 @@
     <div class="game-board-menu-container">
 
       <ButtonApp
-        @buttonClicked="chooseOption"
+        @buttonClicked="help"
         :text="'Pedir ajuda'"
         :button-value="'help'"
+        color-mode="success"
+        icon="help"
       />
 
       <ButtonApp
-        @buttonClicked="chooseOption"
+        @buttonClicked="exit"
         :text="'Desistir'"
         :button-value="'to_give_up'"
+        color-mode="danger"
+        icon="exit"
       />
 
     </div>
@@ -65,6 +69,16 @@ const chooseOption = (value) => {
 
   if (!selectedOptions.includes(value)) {
     store.addSelectedValue(value)
+  }
+}
+
+const help = () => {
+  alert('Você pediu ajuda!')
+}
+
+const exit = () => {
+  if (confirm('Você tem certeza que deseja desistir dessa partida?')) {
+    store.clear()
   }
 }
 

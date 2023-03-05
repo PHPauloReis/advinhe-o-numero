@@ -3,9 +3,16 @@
   <div
     @click="$emit('buttonClicked', buttonValue)"
     class="button-container"
-    :class="{ active: active || isActive }"
+    :class="{ 
+      active: active || isActive,
+      success: colorMode === 'success',
+      danger: colorMode === 'danger'
+    }"
     :style="style"
   >
+    <div class="icon" v-if="!!icon !== false">
+      <img :src="'/src/assets/icons/' + icon + '.svg'">
+    </div>
     {{ text }}
   </div>
   
@@ -35,6 +42,16 @@ const props = defineProps({
     default: false
   },
   width: {
+    type: String,
+    required: false,
+    default: ""
+  },
+  colorMode: {
+    type: String,
+    required: false,
+    default: "default"
+  },
+  icon: {
     type: String,
     required: false,
     default: ""
@@ -82,6 +99,37 @@ const isActive = computed(() => {
 
 .active:hover {
   background-color: #B5E8FC;
+}
+
+.icon {
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+.success {
+  background-color: #39CC33;
+  border-color: #39CC33;
+  border-bottom-color: #48A728;
+  color: #FFF;
+  font-weight: bold;
+}
+
+.success:hover {
+  background-color: #14BE0D;
+  border-color: #14BE0D;
+}
+
+.danger {
+  background-color: #FF4D54;
+  border-color: #FF4D54;
+  border-bottom-color: #E52D34;
+  color: #FFF;
+  font-weight: bold;
+}
+
+.danger:hover {
+  background-color: #E52D34;
+  border-color: #E52D34;
 }
   
 </style>

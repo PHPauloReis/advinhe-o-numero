@@ -31,6 +31,11 @@ export const defaultStore = defineStore('store', {
 
       addSelectedValue(selectedValue) {
         this.selectedValues.push(selectedValue)
+      },
+
+      clear() {
+        this.activeGameMode = null,
+        this.selectedValues = []
       }
 
     },
