@@ -6,9 +6,9 @@
 
     <MenuApp @activatedGameMode="showGameBoard" />
 
-    <GameBoardApp v-if="selectedGameMode" :game-mode="selectedGameMode" />
+    <GameBoardApp @askedForHelp="showHelpModal = true" v-if="selectedGameMode" :game-mode="selectedGameMode" />
 
-    <ModalApp />
+    <ModalApp @closeModal="showHelpModal = false" :showing="showHelpModal" />
 
   </div>
   
@@ -24,6 +24,7 @@
   import { ref } from 'vue';
 
   let selectedGameMode = ref(null)
+  let showHelpModal = ref(false)
 
   const showGameBoard = (gameMode) => {
     selectedGameMode.value = gameMode

@@ -57,6 +57,8 @@ let helps = ref(0)
 
 const store = defaultStore()
 
+const emit = defineEmits(['askedForHelp'])
+
 const props = defineProps({
   gameMode: {
     type: String,
@@ -94,7 +96,7 @@ const chooseOption = (value) => {
 }
 
 const canAskForHelp = () => {
-  return helps < gameDefinitions[props.gameMode].help
+  return helps.value < gameDefinitions[props.gameMode].help
 }
 
 const help = () => {
@@ -103,8 +105,8 @@ const help = () => {
     return
   }
 
-  helps++
-  alert("Você pediu ajuda!")
+  emit('askedForHelp')
+  helps.value++
 }
 
 const exit = () => {

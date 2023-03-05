@@ -28,12 +28,24 @@
 <script setup>
 
 import ButtonApp from './ButtonApp.vue';
-import { ref } from 'vue';
+import { computed } from 'vue';
 
-const showingModal = ref(true)
+const emit = defineEmits(['closeModal'])
+
+const props = defineProps({
+  showing: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
+})
+
+const showingModal = computed(() => {
+  return props.showing
+})
 
 const closeModal = () => {
-  showingModal.value = false
+  emit('closeModal')
 }
 
 </script>
@@ -62,7 +74,7 @@ const closeModal = () => {
   height: 100%;
   background-color: black;
   z-index: -1;
-  opacity: 0.2;
+  opacity: 0.5;
 }
 
 .modal-container {
