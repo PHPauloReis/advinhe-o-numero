@@ -2,10 +2,8 @@ import { defineStore } from 'pinia'
 
 export const defaultStore = defineStore('store', {
     
-    state: () => ({ 
-
-      count: 0, 
-      name: 'Eduardo',
+    state: () => ({
+      
       activeGameMode: null,
       selectedValues: []
 
@@ -20,10 +18,6 @@ export const defaultStore = defineStore('store', {
     },
     
     actions: {
-
-      increment() {
-        this.count++
-      },
 
       setActiveGameMode(gameMode) {
         this.activeGameMode = gameMode

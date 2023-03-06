@@ -46,7 +46,7 @@
 
 <script setup>
 
-import { onBeforeMount, computed, ref, vModelSelect } from 'vue';
+import { onBeforeMount, computed, ref, watch } from 'vue';
 import { defaultStore } from '../store/state';
 import ButtonApp from './ButtonApp.vue';
 import gameDefinitions from '../commons/gameDefinitions'
@@ -54,6 +54,7 @@ import gameDefinitions from '../commons/gameDefinitions'
 let numbers = []
 let moves = ref(0)
 let helps = ref(0)
+let chosenRandomNumber = null
 
 const store = defaultStore()
 
@@ -72,11 +73,20 @@ onBeforeMount(() => {
   for (let i = 1; i <= 50; i++) {
     numbers.push(i)
   }
+
+  chosenRandomNumber = chooseRandomNumber(1, 50)
   
 })
 
+const activeGameMode = computed(() => store.getActiveGameMode)
+
 const movesAvailable = computed(() => {
   return gameDefinitions[props.gameMode].moves - moves.value
+})
+
+watch(activeGameMode, () => {
+  clearGameData()
+  chosenRandomNumber = chooseRandomNumber(1, 50)
 })
 
 const zeroFill = (value) => value.toString().padStart(2, '0')
@@ -112,9 +122,17 @@ const help = () => {
 const exit = () => {
   if (confirm('Você tem certeza que deseja desistir dessa partida?')) {
     store.clear()
-    moves.value = 0
-    helps.value = 0
+    clearGameData()
   }
+}
+
+const clearGameData = () => {
+  moves.value = 0
+  helps.value = 0
+}
+
+const chooseRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 </script>

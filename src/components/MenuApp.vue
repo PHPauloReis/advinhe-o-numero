@@ -36,9 +36,11 @@ const buttons = [
 const store = defaultStore()
 
 const changeGameMode = (gameMode) => {
-  store.clear()
-  store.setActiveGameMode(gameMode)
-  emit('activatedGameMode', gameMode)
+  if (store.getActiveGameMode !== gameMode) {
+    store.clear()
+    store.setActiveGameMode(gameMode)
+    emit('activatedGameMode', gameMode)
+  }
 }
 
 </script>
