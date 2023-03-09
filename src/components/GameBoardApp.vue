@@ -4,7 +4,17 @@
 
     <h2>Em qual número eu estou pensando?</h2>
 
-    <div class="move-counter">Você ainda tem {{ movesAvailable }} jogadas!</div>
+    <div
+      class="move-counter"
+      :class="{ 
+        userWin: gameStatus === 'userWin',
+        userLoose: gameStatus === 'userLoose' || isLastMove
+      }"
+    >
+      <div v-if="gameStatus === 'userWin'">Parabéns, você venceu!</div>
+      <div v-if="gameStatus === 'userLoose'">Que pena, você perdeu!</div>
+      <div v-if="gameStatus === 'running'">Você ainda tem {{ movesAvailable }} jogadas!</div>
+    </div>
 
     <div class="number-container">
 
@@ -55,6 +65,7 @@ let numbers = []
 let moves = ref(0)
 let helps = ref(0)
 let chosenRandomNumber = null
+let gameStatus = 'running'
 
 const store = defaultStore()
 
@@ -84,6 +95,12 @@ const movesAvailable = computed(() => {
   return gameDefinitions[props.gameMode].moves - moves.value
 })
 
+const isLastMove = computed(() => {
+  const selectedOptions = store.getSelectedValues
+
+  return gameDefinitions[props.gameMode].moves - selectedOptions.length === 1
+});
+
 watch(activeGameMode, () => {
   clearGameData()
   chosenRandomNumber = chooseRandomNumber(1, 50)
@@ -102,6 +119,15 @@ const chooseOption = (value) => {
   if (!selectedOptions.includes(value)) {
     store.addSelectedValue(value)
     moves.value++
+
+    if (chosenRandomNumber === value) {
+      gameStatus = "userWin"
+      return
+    }
+
+    if (selectedOptions.length === gameDefinitions[props.gameMode].moves) {
+      gameStatus = "userLoose"
+    }
   }
 }
 
@@ -176,6 +202,18 @@ h2 {
 
 .game-board-menu-container * {
   margin: 0 15px;
+}
+
+.userWin {
+  color: #48A728;
+  border-color: #48A728 !important;
+  background-color: #39CC3355;
+}
+
+.userLoose {
+  color: #FF4D54;
+  border-color: #FF4D54 !important;
+  background-color: #FF4D5455;
 }
 
 </style>
